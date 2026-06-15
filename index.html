@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundaresan Ravi | Academic Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Tab transition utilities */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Prevent flash on load */
+        .prevent-transition * {
+            transition: none !important;
+        }
+    </style>
+    <script>
+        // Check local storage for dark mode on load
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 transition-colors duration-500 min-h-screen text-slate-800 dark:text-slate-200 antialiased selection:bg-brand-500 selection:text-white relative z-0">
+
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 translate-y-20 opacity-0 z-50 flex items-center gap-3">
+        <i data-lucide="info" class="w-5 h-5 text-brand-400 dark:text-brand-600"></i>
+        <span id="toast-msg" class="text-sm font-medium">Action triggered</span>
+    </div>
+
+    <div class="max-w-[1250px] mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Main Interface Container -->
+        <main class="relative bg-white dark:bg-slate-800 rounded-[2rem] shadow-xl dark:shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700 block transition-colors duration-500">
+            
+            <nav class="flex justify-between items-center px-6 py-4 md:px-10 border-b border-slate-100 dark:border-slate-700 sticky top-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md z-40 transition-colors duration-300">
+                <div class="font-bold text-lg tracking-tight text-slate-800 dark:text-white hidden sm:block">
+                    Sundaresan Ravi
+                </div>
+                
+                <!-- Tab Controls -->
+                <div class="flex relative bg-slate-100 dark:bg-slate-900 p-1 rounded-xl mx-auto sm:mx-0">
+                    <button onclick="switchMainTab('cv')" id="tab-btn-cv" class="relative z-10 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm">
+                        Curriculum Vitae
+                    </button>
+                    <button onclick="switchMainTab('projects')" id="tab-btn-projects" class="relative z-10 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                        Projects & Scripts
+                    </button>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
+                        <i id="theme-icon" data-lucide="moon" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="relative w-full h-auto">
+                
+                <!-- ============================================== -->
+                <!-- TAB 1: CV CONTENT                              -->
+                <!-- ============================================== -->
+                <div id="tab-cv" class="tab-content active px-6 pt-6 pb-6 md:px-10 md:pt-10 md:pb-8 lg:px-12 lg:pt-12 lg:pb-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        
+                        <!-- Left Sidebar (Profile) -->
+                        <div class="lg:col-span-4 flex flex-col items-center text-center h-fit">
+                            <!-- Profile Image -->
+                            <div class="relative mb-6 group">
+                                <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-slate-100 dark:border-slate-700 shadow-lg bg-slate-100 flex items-center justify-center transition-colors duration-500">
+                                    <img 
+                                        src="https://i.postimg.cc/y6fgrTwc/sundaresan-profile.png" 
+                                        alt="Sundaresan Ravi" 
+                                        class="w-full h-full object-cover"
+                                    >
+                                </div>
+                                <div class="absolute bottom-2 right-4 bg-white dark:bg-slate-800 p-2 rounded-full shadow-lg border border-slate-100 dark:border-slate-700 transition-colors duration-500" title="Chemistry">
+                                    <i data-lucide="flask-conical" class="w-6 h-6 text-brand-500"></i>
+                                </div>
+                            </div>
+
+                            <!-- Name & Title -->
+                            <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-1">Sundaresan Ravi</h1>
+                            <h2 class="text-lg font-semibold text-brand-600 dark:text-brand-400 mb-1">Undergraduate Chemistry Student</h2>
+                            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-6">SRM Institute of Science and Technology</p>
+
+                            <!-- Minimal Social Links (No GitHub) -->
+                            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                                <a href="mailto:rs2627@srmist.edu.in" class="w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400 hover:border-brand-200 dark:hover:border-brand-800 transition-all shadow-sm" aria-label="Email">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/sundaresanravi" target="_blank" class="w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400 hover:border-brand-200 dark:hover:border-brand-800 transition-all shadow-sm" aria-label="LinkedIn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                                </a>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="flex items-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-full border border-slate-100 dark:border-slate-700 transition-colors duration-500">
+                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-brand-500"></i>
+                                Kancheepuram, India
+                            </div>
+
+                            <!-- Technical Abilities & Certifications (Moved to Sidebar) -->
+                            <div class="w-full mt-8 pt-8 border-t border-slate-100 dark:border-slate-700 text-left">
+                                
+                                <!-- Technical Abilities -->
+                                <div class="mb-8">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <i data-lucide="code-2" class="w-4 h-4 text-brand-500"></i>
+                                        <h3 class="font-bold text-slate-800 dark:text-white uppercase tracking-wider text-sm">Technical Abilities</h3>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">DFT</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">VASP</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">Gaussian</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">Python</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">Machine Learning</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">Cheminformatics</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 dark:border-slate-700 transition-colors">RDKit</span>
+                                        <span class="bg-slate-50 dark:bg-slate-900 text-brand-600 dark:text-brand-400 px-2.5 py-1 rounded-md text-xs font-medium border border-brand-200 dark:border-brand-800 transition-colors">MS Excel</span>
+                                    </div>
+                                </div>
+
+                                <!-- Certifications -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <i data-lucide="award" class="w-4 h-4 text-brand-500"></i>
+                                        <h3 class="font-bold text-slate-800 dark:text-white uppercase tracking-wider text-sm">Certifications</h3>
+                                    </div>
+                                    <ul class="space-y-4">
+                                        <li class="flex items-start gap-3">
+                                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-xs text-slate-800 dark:text-slate-200 leading-snug">QC101 Quantum Computing & QML</h4>
+                                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">Udemy (Dec 2025)</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-xs text-slate-800 dark:text-slate-200 leading-snug">IELTS Academic (Overall: 7.0)</h4>
+                                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-wider">British Council (Nov 2025)</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Content Area -->
+                        <div class="lg:col-span-8 space-y-10">
+                            
+                            <!-- Professional Summary -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="bg-brand-50 dark:bg-brand-900/30 p-2 rounded-lg text-brand-600 dark:text-brand-400">
+                                        <i data-lucide="user-circle" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Professional Summary</h3>
+                                </div>
+                                <div class="text-slate-600 dark:text-slate-300 leading-relaxed text-base text-justify">
+                                    <p class="mb-4">
+                                        I am a chemistry graduate (B.S. Honours, thesis defended April 2026) with a growing fascination for how computational and data-driven methods are reshaping the discovery of new molecules and materials. Through hands-on research - running periodic DFT calculations on transition-metal-intercalated WS₂ for supercapacitor applications, and building machine-learning pipelines to predict binding energies and spectroscopic properties - I have come to see firsthand both the power and the limitations of classical electronic-structure methods, and the promise of AI in overcoming them.
+                                    </p>
+                                    <p class="mb-4">
+                                        My ambition is to help build the next generation of tools that let chemists explore vast molecular spaces with a speed and insight that traditional methods cannot match. I recognize, however, that I am still early in this journey. What I bring is a solid foundation in quantum and computational chemistry, genuine curiosity, and the discipline to learn quickly - what I seek now is the mentorship and training to turn that foundation into real capability.
+                                    </p>
+                                    <p>
+                                        I'll be documenting this journey as I go - using the projects section of this site to log what I'm learning, the experiments I'm running, and the ideas I'm exploring along the way. I hope to contribute meaningfully to a team working at the intersection of chemistry and machine learning, while continuing to grow as a researcher who can one day push that frontier forward myself.
+                                    </p>
+                                </div>
+                            </section>
+
+                            <!-- Education -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="bg-brand-50 dark:bg-brand-900/30 p-2 rounded-lg text-brand-600 dark:text-brand-400">
+                                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Education</h3>
+                                </div>
+                                
+                                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-6 rounded-2xl transition-colors duration-500">
+                                    <div class="flex items-start gap-4">
+                                        <div class="bg-brand-600 text-white p-3 rounded-full mt-1 shrink-0">
+                                            <i data-lucide="book-open" class="w-5 h-5"></i>
+                                        </div>
+                                        <div class="w-full">
+                                            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 dark:text-white text-lg leading-tight mb-1">B.S. in Chemistry (Honors)</h4>
+                                                    <p class="text-brand-600 dark:text-brand-400 text-sm font-medium mb-2">SRM Institute of Science & Technology</p>
+                                                </div>
+                                                <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium shrink-0">
+                                                    <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> Aug 2022 - Apr 2026</span>
+                                                    <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full border border-green-200 dark:border-green-800">GPA: 8.8/10</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
+                                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                                    <strong class="text-slate-700 dark:text-slate-300">Coursework:</strong> Quantum Chemistry, Group Theory, Thermodynamics, Molecular Spectroscopy, Electrochemistry, Solid State Chemistry, Computational Chemistry, Advanced Physical Chemistry, Calculus & Statistics.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Experience -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="bg-brand-50 dark:bg-brand-900/30 p-2 rounded-lg text-brand-600 dark:text-brand-400">
+                                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Experience</h3>
+                                </div>
+
+                                <div class="relative border-l-2 border-slate-200 dark:border-slate-700 ml-3 pl-6 space-y-8">
+                                    <!-- Timeline Item -->
+                                    <div class="relative">
+                                        <div class="absolute -left-[31px] bg-white dark:bg-slate-800 border-2 border-brand-500 w-4 h-4 rounded-full mt-1.5 transition-colors"></div>
+                                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-1">
+                                            <h4 class="font-bold text-lg text-slate-800 dark:text-white">Research Intern</h4>
+                                            <span class="text-xs font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 px-3 py-1 rounded-full w-fit mt-2 md:mt-0 border border-slate-200 dark:border-slate-700">Apr 2025 - Jul 2025</span>
+                                        </div>
+                                        <p class="text-brand-600 dark:text-brand-400 font-medium text-sm mb-3">SRM Institute of Science & Technology</p>
+                                        <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Project: Enhancing Supercapacitive Performance of WS2 via Transition-Metal Intercalation</p>
+                                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 dark:text-slate-400 space-y-1.5">
+                                            <li>Performed periodic DFT calculations using VASP to study the structural stability, electronic structure, and energetics of transition-metal-intercalated WS2 systems.</li>
+                                            <li>Developed Python-based workflows to process density-of-states (DOS) data and compute quantum capacitance.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Projects (CV Native) -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="bg-brand-50 dark:bg-brand-900/30 p-2 rounded-lg text-brand-600 dark:text-brand-400">
+                                        <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Research Projects</h3>
+                                </div>
+
+                                <div class="grid grid-cols-1 gap-5">
+                                    <!-- Project 1 -->
+                                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl p-6 transition-colors duration-500">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <h4 class="font-bold text-slate-800 dark:text-white text-lg">ML for predicting spectroscopic properties of transition-metal complexes</h4>
+                                            <span class="text-xs font-medium bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 px-2 py-1 rounded shrink-0 ml-4">Active</span>
+                                        </div>
+                                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 dark:text-slate-400 space-y-1.5">
+                                            <li>Designed dative-bonded SMILES representations of transition-metal complexes for ML input.</li>
+                                            <li>Built & curated a database of complexes and performed quantum chemical calculations (Gaussian) to extract electronic properties.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Project 2 -->
+                                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl p-6 transition-colors duration-500">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <h4 class="font-bold text-slate-800 dark:text-white text-lg">ML analysis for binding-energy prediction on functionalized borophene</h4>
+                                            <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 ml-4 border border-slate-200 dark:border-slate-700 px-2 py-1 rounded">Jun 2025</span>
+                                        </div>
+                                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 dark:text-slate-400 space-y-1.5">
+                                            <li>Curated and preprocessed a dataset of DFT-computed binding energies for functionalized borophene surfaces.</li>
+                                            <li>Developed and benchmarked regression models enabling identification of key structure-property relationships.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="bg-brand-50 dark:bg-brand-900/30 p-2 rounded-lg text-brand-600 dark:text-brand-400">
+                                        <i data-lucide="presentation" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Conferences & Seminars</h3>
+                                </div>
+
+                                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl p-6 transition-colors duration-500">
+                                    <ul class="space-y-6">
+                                        <!-- Item 1 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="mic" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">Materials Informatics: Fingerprints, GNNs and Transformer Models for Materials Design</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Jan 2025</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">Indian Institute of Technology, Madras</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 2 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="monitor-play" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">Computational Chemistry Techniques - NPTEL+</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Jan 2025</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">Online</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 3 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="monitor-play" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">Hands-On Workshop on Density Functional Theory (DFT) Calculations</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Sep 2024</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">Online</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 4 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="monitor-play" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">Hands-On Workshop on Molecular Docking & MD Simulation: From Theory and Practical</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Sep 2024</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">Online</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 5 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="mic" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">AI and Machine Learning in Material Science</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Jun 2024</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">Indian Institute of Technology, Madras</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 6 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="mic" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">Computational Methods for Solving Chemical Problems</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Feb 2024</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">National Institute of Technology, Trichy</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- Item 7 -->
+                                        <li class="flex items-start gap-4">
+                                            <div class="mt-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1.5 rounded-md shadow-sm shrink-0">
+                                                <i data-lucide="mic" class="w-4 h-4 text-brand-500"></i>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                                    <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-snug">ASTON's Workshop on Mass Spectrometry</h4>
+                                                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400 shrink-0 md:text-right">Aug 2023</span>
+                                                </div>
+                                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">SRM Institute of Science and Technology</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB 2: SCRIPTS & CODE PLAYGROUND               -->
+                <!-- ============================================== -->
+                <div id="tab-projects" class="tab-content">
+                    <div class="flex flex-col items-center justify-center min-h-[50vh] p-8 md:p-16 text-center animate-[fadeIn_0.5s_ease-out]">
+                        
+                        <!-- Under Construction Doodle (Made larger) -->
+                        <div class="w-80 md:w-[28rem] lg:w-[36rem] mb-10 relative drop-shadow-xl hover:scale-105 transition-transform duration-500">
+                            <img 
+                                src="https://i.postimg.cc/TPXJY92f/Gemini-Generated-Image-cnoqtacnoqtacnoq.png" 
+                                alt="Under Construction Doodle" 
+                                class="w-full h-auto object-contain"
+                            >
+                        </div>
+
+                        <!-- Message -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-3">
+                            Pardon the dust!
+                        </h2>
+                        <p class="text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed mb-8">
+                            The Projects & Scripts directory is currently under construction. Check back soon for my Jupyter notebooks, Python workflows, and ML pipelines.
+                        </p>
+
+                        <!-- Back Button -->
+                        <button onclick="switchMainTab('cv')" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2.5 px-6 rounded-xl transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            Return to CV
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer Space -->
+        <footer class="text-center py-8 text-slate-500 dark:text-slate-500 text-sm transition-colors duration-300">
+            &copy; 2026 Sundaresan Ravi. Designed for Academic Portfolio.
+        </footer>
+    </div>
+
+    <script>
+        // Prevent transitions on load
+        document.body.classList.remove('prevent-transition');
+        
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            const iconEl = document.getElementById('theme-icon');
+            if(isDark) {
+                iconEl.setAttribute('data-lucide', 'sun');
+            } else {
+                iconEl.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
+
+        // Initial icon state
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const iconEl = document.getElementById('theme-icon');
+            if(isDark && iconEl) {
+                iconEl.setAttribute('data-lucide', 'sun');
+                lucide.createIcons();
+            }
+        });
+
+        // Tab Switch controls
+        function switchMainTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const btnCv = document.getElementById('tab-btn-cv');
+            const btnProj = document.getElementById('tab-btn-projects');
+            
+            const inactiveClass = "relative z-10 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border border-transparent";
+            const activeClass = "relative z-10 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm";
+
+            btnCv.className = inactiveClass;
+            btnProj.className = inactiveClass;
+
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            if(tabId === 'cv') {
+                btnCv.className = activeClass;
+            } else {
+                btnProj.className = activeClass;
+            }
+        }
+
+        // Tech Toast Logic
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
